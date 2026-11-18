@@ -77,13 +77,37 @@ button:hover {
   list-style: none;
 }
 
+
+li:last-child {
+  border-bottom: none;
+}
+
+.done {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+/* Выравниваем текст задачи слева, а крестик — справа */
 li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 12px 0;
   border-bottom: 1px solid #e2e8f0;
   font-size: 17px;
   color: #334155;
+  cursor: pointer;
 }
 
-li:last-child {
-  border-bottom: none;
+/* Аккуратная кнопка удаления */
+.delete-btn {
+  background-color: transparent;
+  color: #94a3b8;
+  padding: 4px 8px;
+  font-size: 14px;
+}
+
+.delete-btn:hover {
+  background-color: #fee2e2;
+  color: #ef4444;
 }
