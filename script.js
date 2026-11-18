@@ -16,19 +16,16 @@ function render() {
       li.classList.add("done");
     }
 
-    // Клик по самой задаче — переключаем статус выполнения
     li.addEventListener("click", function () {
       task.done = !task.done;
       render();
     });
 
-    // Бонус: кнопка удаления
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "✕";
     deleteBtn.classList.add("delete-btn");
 
     deleteBtn.addEventListener("click", function (event) {
-      // Останавливаем всплытие, чтобы клик по крестику не засчитался как клик по li
       event.stopPropagation();
 
       tasks = tasks.filter(function (t) {
@@ -67,3 +64,27 @@ input.addEventListener("keydown", function (event) {
     addTask();
   }
 });
+
+async function loadTasks() {
+  const response = await fetch("https://jsonplaceholder.typicode.com/todos?_limit=5");
+  const data = await response.json();
+
+  tasks = data.map(function (item) {
+    return {
+      id: item.id,
+      text: item.title,
+      done: item.completed,
+    };
+  });
+
+  if (tasks.length > 0) {
+    const maxId = Math.max(...tasks.map(function (t) {
+      return t.id;
+    }));
+    nextId = maxId + 1;
+  }
+
+  render();
+}
+
+loadTasks();
