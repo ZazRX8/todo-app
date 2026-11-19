@@ -70,21 +70,16 @@ async function loadTasks() {
   try {
     errorMessage.textContent = ""; // очищаем старую ошибку перед запросом
 
-    const response = await fetch("https://jsonplaceholder.typicode.com/todos?_limit=5");
+    const response = await fetch("http://127.0.0.1:8000/tasks");
 
     if (!response.ok) {
       throw new Error("Сервер ответил ошибкой: " + response.status);
     }
 
     const data = await response.json();
+    console.log(data);
 
-    tasks = data.map(function (item) {
-      return {
-        id: item.id,
-        text: item.title,
-        done: item.completed,
-      };
-    });
+    tasks = data;
 
     if (tasks.length > 0) {
       const maxId = Math.max(...tasks.map(function (t) {
